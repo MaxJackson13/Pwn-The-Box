@@ -1,0 +1,56 @@
+version: '3.9'
+services:
+
+  splunk:
+    container_name: splunk
+    build:
+      context: ./splunk/
+      dockerfile: Dockerfile
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+#      - SPLUNK_PASSWORD=password
+    depends_on:
+      - nodejs
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.4
+    volumes:
+      - data:/var/log/node
+
+  nodejs:
+    container_name: node
+    build:
+      context: ./node/
+      dockerfile: Dockerfile
+    environment:
+       - MONGO_CONNSTRING=mongodb://root:rootpass@mongodb/appdb?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.2
+    volumes:
+      - data:/var/log/node
+
+  mongodb:
+    container_name: mongo
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=appdb
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+    volumes:
+      - ./init.js:/docker-entrypoint-initdb.d/init.js:ro
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.3
+
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+
+volumes:
+  data:

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/login">
+        <h2>Admin Portal</h2>
+        <label for="username">Username</label>
+        <input type="text" name="username"  />
+        <div class="username error"></div>
+        <label for="password">Password</label>
+        <input type="password" name="password"  />
+        <div class="password error"></div>
+        <button>login</button>
+    </form>
+</body>
+</html>
+
+<script>
+    const form = document.querySelector('form')
+    const error = document.querySelectorAll('.error')
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+
+        const username = form.username.value
+        const password = form.password.value
+
+        fetch('/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: username, 
+                password: password
+            }),
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then( res => res.json())
+        .then( data => {
+            if (data.error) {
+                location.assign('/login')
+                error.textContent = ''
+            }
+            if (data.token) {
+                location.assign('/search')
+            }
+        })
+        .catch( err => console.error(err))
+    })
+</script>

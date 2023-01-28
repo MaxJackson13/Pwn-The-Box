@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Search Bar</title>
+  </head>
+  <body>
+    <div class="search-container">
+      <h1>Search for a user</h1>
+      <form action="/search" method="post">
+        <input type="text" placeholder="Search..." name="username">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </body>
+</html>
+
+<style>
+    h1 {
+        text-align: center;
+        font-size: 2em;
+    }
+    .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0px auto;
+    }
+
+    form {
+        display: flex;
+        margin: 0px 50px;
+    }
+
+    input[type=text] {
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        width: 300px;
+    }
+
+    button[type=submit] {
+        width: 100px;
+        padding: 12px 20px;
+        margin: 8px 0;
+        border: none;
+        background-color: #FEE996;
+        color: #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button[type=submit]:hover {
+        background-color: #f1d45c;
+    }
+</style>
+
