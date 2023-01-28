@@ -12,7 +12,5 @@ The `kid` is a field the server uses to determine which key was used in the sign
 
 Now we have access to the search functionality. Testing `noSQL` injection payloads doesn't appear to work, however if we proxy the request through Burpsuite and change the `Content-Type` to `application/json` we find some success with the payload 
 `
-{
-    "username": {"$ne":  null}
-}
+{"username":{"$ne": null}}
 `
