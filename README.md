@@ -10,5 +10,4 @@ After authenticating, we're presented with an option to search, however any sear
 
 The `kid` is a field the server uses to determine which key was used in the signature. It appears the server is uing the `/etc/passwd` as the key. This may seem secure at first as we've no idea what the server's `/etc/passwd` looks like. However if we supply a file for the `kid` we reliably know will be the same on the server as for us, we can forge a token. A good file to use is `/dev/null` as it's the same and present across every Linux system. So we can set `isAdmin: true` and `kid: '/dev/null'`, and forge a token which the server will successfully verify. 
 
-Now we have access to the search functionality. Testing `noSQL` injection payloads doesn't appear to work, however if we proxy the request through Burpsuite and change the `Content-Type` to `application/json` we find some success with the payload 
-`    { "username": { "$ne": null}}`
+Now we have access to the search functionality. Testing `noSQL` injection payloads doesn't appear to work, however if we proxy the request through Burpsuite and change the `Content-Type` to `application/json` we find success with the payload `{ "username": { "$ne": null}}`
